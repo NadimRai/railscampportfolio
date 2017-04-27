@@ -32,7 +32,7 @@ class BlogsController < ApplicationController
         format.json { render :show, status: :created, location: @blog }
       else
         format.html { render :new }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
+        
       end
     end
   end
@@ -46,7 +46,7 @@ class BlogsController < ApplicationController
         format.json { render :show, status: :ok, location: @blog }
       else
         format.html { render :edit }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
+        
       end
     end
   end
@@ -57,7 +57,7 @@ class BlogsController < ApplicationController
     @blog.destroy
     respond_to do |format|
       format.html { redirect_to blogs_url, notice: 'Blog was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { head :no_content}
     end
   end
 
