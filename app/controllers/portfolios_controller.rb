@@ -33,8 +33,14 @@ class PortfoliosController < ApplicationController
 		else
 			render :edit 
 		end
-
 	end
+
+	def destroy
+		@portfolio_item = Portfolio.find(params[:id])
+		@portfolio_item.destroy
+		redirect_to portfolios_path
+	end
+	
 
 	private
 
