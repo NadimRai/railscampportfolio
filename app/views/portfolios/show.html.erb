@@ -1,2 +1,4 @@
+<%= image_tag @portfolio_item.main_image if !@portfolio_item.main_image.nil? %>
 <%= @portfolio_item.title %>
 <%= @portfolio_item.subtitle %>
+<%= @portfolio_item.body %>
