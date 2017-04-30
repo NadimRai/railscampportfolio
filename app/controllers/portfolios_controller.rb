@@ -7,7 +7,7 @@ class PortfoliosController < ApplicationController
 	def angular 
 		@angular_portfolio_items = Portfolio.angular
 	end
-	
+
 	def new
 		@portfolio_item = Portfolio.new
 	end
@@ -15,7 +15,7 @@ class PortfoliosController < ApplicationController
 	def create
 		@portfolio_item = Portfolio.new(portfolio_params)
 		if @portfolio_item.save
-			redirect_to @portfolio_item
+			redirect_to portfolios_path
 		else
 			render :new
 		end
