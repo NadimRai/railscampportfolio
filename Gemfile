@@ -29,6 +29,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'friendly_id', '~> 5.2', '>= 5.2.1'
 gem 'devise', '~> 4.2', '>= 4.2.1'
+gem 'bootstrap', '~> 4.0.0.alpha6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
