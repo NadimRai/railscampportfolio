@@ -1,4 +1,6 @@
 class PortfoliosController < ApplicationController
+	before_action :set_portfolio_item, only: [:edit, :update, :show, :destroy]
+
 	layout 'portfolio'
 
 	def index
@@ -25,16 +27,16 @@ class PortfoliosController < ApplicationController
 
 
 	def show
-		@portfolio_item = Portfolio.find(params[:id])
+		
 	end
 
 	def edit
-		@portfolio_item = Portfolio.find(params[:id])
+		
 
 	end
 
 	def update
-		@portfolio_item = Portfolio.find(params[:id])
+		
 		if @portfolio_item.update(portfolio_params)
 			redirect_to @portfolios_path
 		else
@@ -43,7 +45,7 @@ class PortfoliosController < ApplicationController
 	end
 
 	def destroy
-		@portfolio_item = Portfolio.find(params[:id])
+		
 		@portfolio_item.destroy
 		redirect_to portfolios_path
 	end
@@ -58,5 +60,9 @@ class PortfoliosController < ApplicationController
 											technologies_attributes: [:name]
 											)
 	end
+
+	def set_portfolio_item
+		@portfolio_item = Portfolio.find(params[:id])
+	end 		
 
 end
