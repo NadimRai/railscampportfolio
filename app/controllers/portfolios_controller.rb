@@ -39,7 +39,7 @@ class PortfoliosController < ApplicationController
 	def update
 		
 		if @portfolio_item.update(portfolio_params)
-			redirect_to @portfolios_path
+			redirect_to portfolios_path
 		else
 			render :edit 
 		end
