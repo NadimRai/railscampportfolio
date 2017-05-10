@@ -1,79 +1,79 @@
 class PortfoliosController < ApplicationController
-	before_action :set_portfolio_item, only: [:edit, :update, :show, :destroy]
+  before_action :set_portfolio_item, only: [:edit, :show, :update, :destroy]
+  layout 'portfolio'
+  access all: [:show, :index, :angular], user: {except: [:destroy, :new, :create, :update, :edit, :sort]}, site_admin: :all
+  
+  def index
+    @portfolio_items = Portfolio.by_position
+  end
 
-	layout 'portfolio'
-	access all: [:show, :index, :angular], user: {except: [:destroy, :new, :create, :update, :edit, :sort]}, site_admin: :all
+  def sort
+    params[:order].each do |key, value|
+      Portfolio.find(value[:id]).update(position: value[:position])
+    end
 
-	def index
-		@portfolio_items = Portfolio.all.order("position ASC")
-	end
+    render nothing: true
+  end
 
-	def sort
-		params[:order].each do |key, value|
-			Portfolio.find(value[:id]).update(position: value[:position])
-		end
+  def angular
+    @angular_portfolio_items = Portfolio.angular
+  end
 
-		render nothing: true
-	end
+  def new
+    @portfolio_item = Portfolio.new
+  end
 
-	def angular 
-		@angular_portfolio_items = Portfolio.angular
-	end
+  def create
+    @portfolio_item = Portfolio.new(portfolio_params)
 
-	def new
-		@portfolio_item = Portfolio.new
-		
-	end
+    respond_to do |format|
+      if @portfolio_item.save
+        format.html { redirect_to portfolios_path, notice: 'Your portfolio item is now live.' }
+      else
+        format.html { render :new }
+      end
+    end
+  end
 
-	def create
-		@portfolio_item = Portfolio.new(portfolio_params)
-		if @portfolio_item.save
-			redirect_to portfolios_path
-		else
-			render :new
-		end
-	end
+  def edit
+  end
 
+  def update
+    respond_to do |format|
+      if @portfolio_item.update(portfolio_params)
+        format.html { redirect_to portfolios_path, notice: 'The record successfully updated.' }
+      else
+        format.html { render :edit }
+      end
+    end
+  end
 
-	def show
-		
-	end
+  def show
+  end
 
-	def edit
-		
+  def destroy
+    # Destroy/delete the record
+    @portfolio_item.destroy
 
-	end
+    # Redirect
+    respond_to do |format|
+      format.html { redirect_to portfolios_url, notice: 'Record was removed.' }
+    end
+  end
 
-	def update
-		
-		if @portfolio_item.update(portfolio_params)
-			redirect_to portfolios_path
-		else
-			render :edit 
-		end
-	end
+  private
 
-	def destroy
-		
-		@portfolio_item.destroy
-		redirect_to portfolios_path
-	end
-	
+  def portfolio_params
+    params.require(:portfolio).permit(:title,
+                                      :subtitle,
+                                      :body,
+                                      :main_image,
+                                      :thumb_image,
+                                      technologies_attributes: [:id, :name, :_destroy]
+                                     )
+  end
 
-	private
-
-	def portfolio_params
-		params.require(:portfolio).permit(:title, 
-											:subtitle,
-											:body, 
-											:main_image,
-											:thumb_image,
-											technologies_attributes: [:id, :name, :_destroy]
-											)
-	end
-
-	def set_portfolio_item
-		@portfolio_item = Portfolio.find(params[:id])
-	end 		
-
+  def set_portfolio_item
+    @portfolio_item = Portfolio.find(params[:id])
+  end
 end
