@@ -6,7 +6,8 @@
 
     <title><%= @page_title %></title>
     <%= csrf_meta_tags %>
-
+    
+    <%= favicon_link_tag 'simpson.jpg' %>
     <meta name="keywords" content="<%= @seo_keywords %>" />
 
     <%= stylesheet_link_tag    'blogs', media: 'all', 'data-turbolinks-track': 'reload' %>
